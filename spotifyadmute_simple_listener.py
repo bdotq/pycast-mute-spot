@@ -31,8 +31,13 @@ class StatusMediaListener:
     def new_media_status(self, status):
         print("[", time.ctime(), " - ", self.name, "] status media change:")
         #print(status)
-        print("\nCurrent Title:", status.title)
-        if status.title == "Advertising" or status.title == "Advertisement" or status.title == "Spotify":
+        print("Current title:", status.title, ", Artist:", status.artist, ", Album:", status.album_name)
+        print("contentid:", status.content_id)
+        if status.content_id:
+            isCidAd = status.content_id.startswith("spotify:ad")
+        else:
+            isCidAd = False        
+        if isCidAd or status.title == "Advertising" or status.title == "Advertisement" or status.title == "Spotify":
             chromecast.set_volume_muted(True)
             print("Cast device is muted")
         else:
