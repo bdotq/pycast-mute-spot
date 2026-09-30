@@ -48,7 +48,7 @@ class StatusMediaListener:
             args=(status,),
             daemon=True,
         ).start()
-        time.sleep(0.5)
+        #time.sleep(0.5)
 
 
     def handle_media(self, status):
@@ -84,73 +84,81 @@ class StatusMediaListener:
 
         try:
             if is_title and is_duration and is_current_time:
+                #print("Time: " + str(int(status.current_time//60))+":"+str(int(status.current_time%60)) + "/" + str(int(status.duration//60))+":"+str(int(status.duration%60)) )
                 if status.title == "CNBC":
                     if status.current_time < 15.0:
                         chromecast.media_controller.seek(15.0)
                         print("SKIP AD 15s start\n")
                     if status.current_time > (status.duration - 23.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
+                        chromecast.media_controller.seek(status.duration - 1)
                         print("SKIP AD 22s end\n")
                 elif status.title == "CNBC Tech Check":
                     if status.current_time < 7.0:
                         chromecast.media_controller.seek(8.0)
                         print("SKIP AD 8s start\n")
                     if status.current_time > (status.duration - 21.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
+                        chromecast.media_controller.seek(status.duration - 1)
                         print("SKIP AD 21s end\n")
 
             if is_pubilsher and is_duration and is_current_time:
+                print("Publisher: " + status.media_custom_data["publisher"] + " - Time: " + str(int(status.current_time//60))+":"+str(int(status.current_time%60)) + "/" + str(int(status.duration//60))+":"+str(int(status.duration%60)) )
                 cbc = "CBC News: The World at Six"
                 if status.media_custom_data["publisher"] == "The World in Brief from The Economist":
                     if status.current_time < 40.0:
                         chromecast.media_controller.seek(40.0)
                         print("SKIP AD 40s start\n")
-                    if status.current_time > (status.duration - 35.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
-                        print("SKIP AD 35s end\n")
+                    if status.current_time > (status.duration - 48.0):
+                        chromecast.media_controller.seek(status.duration - 1)
+                        print("SKIP AD 48s end\n")
                 elif status.media_custom_data["publisher"] == "WSJ Tech News Briefing":
-                    if status.current_time < 25.0:
+                    if status.current_time < 30.0:
                         chromecast.media_controller.seek(25.0)
                         print("SKIP AD 25s start\n")
-                    if status.current_time > (status.duration - 51.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
-                        print("SKIP AD 51s end\n")
+                    if status.current_time > (status.duration - 33.0):
+                        chromecast.media_controller.seek(status.duration - 1)
+                        print("SKIP AD 33s end\n")
                 elif status.media_custom_data["publisher"] == "Engadget":
                     if status.current_time < 32.0:
                         chromecast.media_controller.seek(32.0)
                         print("SKIP AD 32s start\n")
                     if status.current_time > (status.duration - 30.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
+                        chromecast.media_controller.seek(status.duration - 1)
                         print("SKIP AD 30s end\n")
                 elif status.media_custom_data["publisher"] == "TechCrunch Startups - Spoken Edition":
                     if status.current_time < 41.0:
                         chromecast.media_controller.seek(41.0)
                         print("SKIP AD 41s start\n")
                     if status.current_time > (status.duration - 7.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
+                        chromecast.media_controller.seek(status.duration - 1)
                         print("SKIP AD 7s end\n")
                 elif status.media_custom_data["publisher"] == "Bloomberg News Now":
                     if status.current_time < 30.0:
                         chromecast.media_controller.seek(30.0)
                         print("SKIP AD 30s start\n")
                     if status.current_time > (status.duration - 62.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
+                        chromecast.media_controller.seek(status.duration - 1)
                         print("SKIP AD 62s end\n")
                 elif status.media_custom_data["publisher"] == cbc:
                     if status.current_time < 30.0:
                         chromecast.media_controller.seek(30.0)
                         print("SKIP AD 30s start\n")
                 elif status.media_custom_data["publisher"] == "TechCrunch":
-                    if status.current_time < 38.0:
-                        chromecast.media_controller.seek(38.0)
-                        print("SKIP AD 38s start\n")
+                    if status.current_time < 60.0:
+                        chromecast.media_controller.seek(60.0)
+                        print("SKIP AD 60s start\n")
                 elif status.media_custom_data["publisher"] == "The Exchange":
                     if status.current_time < 45.0:
                         chromecast.media_controller.seek(45.0)
                         print("SKIP AD 45s start\n")
                     if status.current_time > (status.duration - 15.0):
-                        chromecast.media_controller.seek(status.duration - 1.0)
+                        chromecast.media_controller.seek(status.duration - 1)
                         print("SKIP AD 15s end\n")
+                elif status.media_custom_data["publisher"] == "Reuters TV (U.S.)":
+
+                    if status.current_time > (status.duration - 60.0):
+                        chromecast.media_controller.seek(status.duration - 1)
+                        print("SKIP AD 60s end\n")
+
 
 
             if is_content_id:
